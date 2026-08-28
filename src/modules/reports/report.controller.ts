@@ -72,7 +72,7 @@ export class ReportController {
 
   verify = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const checksum = req.body.checksum || (req.query.checksum as string);
+      const checksum = req.body.checksum || (req.query.checksum as string) || req.params.checksum;
       if (!checksum) {
         sendError(res, 'Checksum is required for verification', 400);
         return;

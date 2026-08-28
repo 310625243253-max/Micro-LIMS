@@ -9,6 +9,7 @@ const controller = new ReportController();
 // Checksum verification can be public / authenticated
 router.post('/verify', controller.verify);
 router.get('/verify', controller.verify);
+router.get('/verify/:checksum', controller.verify);
 
 // Protected report endpoints
 router.use(authenticate);
