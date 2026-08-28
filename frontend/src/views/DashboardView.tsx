@@ -113,7 +113,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ onNavigate, onSele
                 }}
               >
                 <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#10b981' }} className="pulse-beacon" />
-                Live 3D Telemetry
+                Real-Time Operations
               </span>
             </div>
             <p style={{ fontSize: '0.875rem', color: '#475569', marginTop: '4px', maxWidth: '640px' }}>

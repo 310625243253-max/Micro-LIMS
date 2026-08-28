@@ -16,7 +16,7 @@ export const ViewHeader3D: React.FC<ViewHeader3DProps> = ({
   title,
   category,
   description,
-  badge = 'Live 3D Telemetry',
+  badge = 'Active Laboratory Stream',
   badgeVariant = 'cyan',
   actions,
   icon,

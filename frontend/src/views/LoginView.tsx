@@ -102,20 +102,19 @@ export const LoginView: React.FC = () => {
                   fontFamily: 'var(--font-heading)',
                 }}
               >
-                Micro<span style={{ color: '#0284c7' }}>LIMS</span> <span style={{ fontSize: '1rem', fontWeight: 700, verticalAlign: 'super', color: '#8b5cf6', background: '#f3e8ff', padding: '2px 8px', borderRadius: 'var(--radius-full)', border: '1px solid #e9d5ff' }}>3D PRO</span>
+                Micro<span style={{ color: '#0284c7' }}>LIMS</span> <span style={{ fontSize: '0.75rem', fontWeight: 700, verticalAlign: 'middle', color: '#0284c7', background: '#f0f9ff', padding: '3px 10px', borderRadius: 'var(--radius-full)', border: '1px solid #bae6fd', letterSpacing: '0.04em', textTransform: 'uppercase' }}>Enterprise</span>
               </h1>
               <p style={{ fontSize: '0.875rem', color: '#64748b', marginTop: '2px', fontWeight: 500 }}>
-                Clinical Microbiology Diagnostic & Telemetry Operating System
+                Clinical Microbiology Diagnostic Information & Laboratory Operating System
               </p>
             </div>
           </div>
 
           <p style={{ fontSize: '0.95rem', color: '#475569', lineHeight: 1.6, marginBottom: '22px', maxWidth: '580px' }}>
-            End-to-end specimen lineage governance: barcode accessioning, media batch traceability, atmospheric chamber timers, colonial morphology, AST antibiograms, and cryptographic SHA-256 sign-offs.
+            Comprehensive diagnostic workflow management: barcode accessioning, media batch traceability, atmospheric chamber timers, colonial morphology readings, AST antibiograms, and cryptographic SHA-256 clinical release sign-offs.
           </p>
 
           <div style={{ marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <Sparkles size={15} style={{ color: '#0284c7' }} />
             <span
               style={{
                 fontSize: '0.75rem',
@@ -125,7 +124,7 @@ export const LoginView: React.FC = () => {
                 letterSpacing: '0.06em',
               }}
             >
-              1-Click Demo Persona Switcher (Interactive 3D Cards):
+              Select Authorized Laboratory Role:
             </span>
           </div>
 

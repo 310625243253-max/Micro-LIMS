@@ -133,17 +133,18 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, onNavigate, isOpe
                     fontSize: '0.625rem',
                     padding: '2px 6px',
                     borderRadius: 'var(--radius-xs)',
-                    background: 'linear-gradient(135deg, #0284c7 0%, #8b5cf6 100%)',
-                    color: '#ffffff',
+                    background: '#f0f9ff',
+                    color: '#0284c7',
+                    border: '1px solid #bae6fd',
                     fontWeight: 800,
                     letterSpacing: '0.04em',
                   }}
                 >
-                  3D
+                  ISO 15189
                 </span>
               </div>
               <div style={{ fontSize: '0.6875rem', color: '#64748b', fontWeight: 600, letterSpacing: '0.02em' }}>
-                Clinical Diagnostics Engine
+                Clinical Diagnostics Platform
               </div>
             </div>
           </div>
