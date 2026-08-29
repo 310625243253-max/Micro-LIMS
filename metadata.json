@@ -1,0 +1,8 @@
+{
+  "name": "MicroLIMS",
+  "description": "Microbiology Laboratory Digital Information Management System for clinical specimens, culture lineage, incubations, AST panels, and electronic verification.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

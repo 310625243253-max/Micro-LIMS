@@ -1,14 +1,17 @@
-import { createApp } from './app.js';
-import { config } from './config/env.js';
-import { initDb, query, isUsingMemoryDb } from './db/index.js';
-import { runMigrations } from './db/migrate.js';
-import { seedDatabase } from './db/seeds/seed.js';
-import { initRedis } from './utils/cache.js';
-import { startIncubationScheduler, stopIncubationScheduler } from './modules/incubations/incubation.scheduler.js';
+import { createApp } from './src/app.js';
+import { config } from './src/config/env.js';
+import { initDb, query, isUsingMemoryDb } from './src/db/index.js';
+import { runMigrations } from './src/db/migrate.js';
+import { seedDatabase } from './src/db/seeds/seed.js';
+import { initRedis } from './src/utils/cache.js';
+import { startIncubationScheduler, stopIncubationScheduler } from './src/modules/incubations/incubation.scheduler.js';
+import { createServer as createViteServer } from 'vite';
+import path from 'path';
+import express from 'express';
 
 async function startServer(): Promise<void> {
   try {
-    console.log(`[SERVER] Initializing MicroLIMS Backend Server in ${config.nodeEnv} mode...`);
+    console.log(`[SERVER] Initializing MicroLIMS Server in ${config.nodeEnv} mode...`);
 
     // 1. Initialize Database Connection
     await initDb();
@@ -36,8 +39,6 @@ async function startServer(): Promise<void> {
 
     // 6. Vite Middleware for SPA Frontend
     if (process.env.NODE_ENV !== 'production') {
-      const { createServer: createViteServer } = await import('vite');
-      const path = (await import('path')).default;
       const vite = await createViteServer({
         root: path.resolve(process.cwd(), 'frontend'),
         server: { middlewareMode: true },
@@ -45,8 +46,6 @@ async function startServer(): Promise<void> {
       });
       app.use(vite.middlewares);
     } else {
-      const path = (await import('path')).default;
-      const express = (await import('express')).default;
       const distPath = path.resolve(process.cwd(), 'frontend', 'dist');
       app.use(express.static(distPath));
       app.get('*', (req, res) => {
@@ -57,7 +56,7 @@ async function startServer(): Promise<void> {
     const port = config.port || 3000;
     const server = app.listen(port, '0.0.0.0', () => {
       console.log(`=======================================================`);
-      console.log(` 🔬 MicroLIMS Application Running`);
+      console.log(` 🔬 MicroLIMS Full-Stack Application Running`);
       console.log(` 🌐 URL: http://0.0.0.0:${port}`);
       console.log(` 🏥 Health Check: http://0.0.0.0:${port}/api/health`);
       console.log(` 🔐 Auth Endpoint: http://0.0.0.0:${port}/api/v1/auth/login`);

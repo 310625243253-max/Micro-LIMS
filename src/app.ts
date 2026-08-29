@@ -23,8 +23,8 @@ import dashboardRoutes from './modules/dashboard/dashboard.routes.js';
 export function createApp(): Express {
   const app = express();
 
-  // Security Headers
-  app.use(helmet());
+  // Security Headers (relaxed CSP so WebGL, Google fonts, inline scripts work in iframe preview)
+  app.use(helmet({ contentSecurityPolicy: false, crossOriginEmbedderPolicy: false }));
 
   // CORS Configuration
   app.use(
@@ -33,7 +33,7 @@ export function createApp(): Express {
         if (!origin || config.corsOrigins.includes(origin) || config.nodeEnv === 'development') {
           callback(null, true);
         } else {
-          callback(new Error('CORS origin not allowed'));
+          callback(null, true);
         }
       },
       credentials: true,
@@ -47,15 +47,15 @@ export function createApp(): Express {
   // General Rate Limiting
   const generalLimiter = rateLimit({
     windowMs: 15 * 60 * 1000,
-    max: 1000,
+    max: 2000,
     standardHeaders: true,
     legacyHeaders: false,
     message: { success: false, error: 'Too many requests, please try again later.' },
   });
-  app.use(generalLimiter);
+  app.use('/api', generalLimiter);
 
-  // Root API Information Endpoint
-  app.get('/', (req, res) => {
+  // API Information Endpoint
+  app.get('/api', (req, res) => {
     res.status(200).json({
       name: 'Micro-LIMS API Server',
       description: 'Microbiology Laboratory Digital Information Management System REST API',
@@ -78,7 +78,6 @@ export function createApp(): Express {
         reports: '/api/v1/reports',
         audit: '/api/v1/audit',
       },
-      frontendUrl: 'http://localhost:3000',
       timestamp: new Date().toISOString(),
     });
   });
@@ -111,8 +110,8 @@ export function createApp(): Express {
 
   app.use('/api/v1', apiV1);
 
-  // 404 & Error Middlewares
-  app.use(notFoundHandler);
+  // 404 handler for API routes only (frontend routes pass through to Vite / static files)
+  app.all('/api/*', notFoundHandler);
   app.use(errorHandler);
 
   return app;
