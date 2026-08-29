@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
+  base: './', // Essential for GitHub Pages subpath hosting (e.g. /Micro-LIMS/)
   server: {
     port: 3000,
     proxy: {
@@ -14,3 +15,4 @@ export default defineConfig({
     },
   },
 });
+

@@ -174,6 +174,26 @@ npm test
 
 ---
 
+## 🌐 Deploying to GitHub Pages
+
+To deploy MicroLIMS as a standalone interactive client on GitHub Pages:
+
+### 1. Enable GitHub Pages in Repository Settings
+1. Go to your repository on GitHub: **Settings → Pages**.
+2. Under **Build and deployment → Source**, select **GitHub Actions**.
+
+### 2. Automatic Deployment
+A GitHub Actions workflow is included at `.github/workflows/deploy.yml`. When you push code to `main` or `master`, GitHub Actions will automatically:
+1. Build the Vite frontend with relative subpath asset paths (`base: './'`).
+2. Package the static distribution bundle.
+3. Deploy directly to `https://<your-username>.github.io/<repo-name>/`.
+
+### 3. Backend API Connection (Optional)
+By default on GitHub Pages, the frontend runs in an **Offline / Demo Mode** populated with realistic initial samples, AST panels, incubators, and demo personas. To connect it to your live backend API:
+- Set the `VITE_API_URL` environment variable during build, or define it in your repository secrets/variables pointing to your deployed backend (e.g. `https://your-api.run.app/api/v1`).
+
+---
+
 ## 📄 License
 
 Academic and Portfolio Demonstration Project. All patient and clinical records are purely synthetic.
