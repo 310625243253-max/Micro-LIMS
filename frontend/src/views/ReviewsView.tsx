@@ -30,15 +30,23 @@ export const ReviewsView: React.FC<ReviewsViewProps> = ({ onSelectSample }) => {
     signerTitle: user?.title || 'Senior QA Reviewer',
   });
 
+  const isAuthorizedToReview = hasRole('ADMIN', 'MICROBIOLOGIST', 'REVIEWER');
+
   const fetchData = async () => {
     setLoading(true);
     try {
-      const [p, r] = await Promise.all([
-        api.getPendingReviews(),
-        api.getReviews(),
-      ]);
-      setPending(p);
-      setReviews(r);
+      if (isAuthorizedToReview) {
+        const [p, r] = await Promise.all([
+          api.getPendingReviews(),
+          api.getReviews(),
+        ]);
+        setPending(p);
+        setReviews(r);
+      } else {
+        const r = await api.getReviews();
+        setPending([]);
+        setReviews(r);
+      }
     } catch (err: any) {
       console.error('Failed loading review queues:', err);
       error(err.message || 'Failed loading QC review queues');
@@ -49,7 +57,7 @@ export const ReviewsView: React.FC<ReviewsViewProps> = ({ onSelectSample }) => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [user]);
 
   const handleSignOff = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -86,6 +94,31 @@ export const ReviewsView: React.FC<ReviewsViewProps> = ({ onSelectSample }) => {
           </button>
         }
       />
+
+      {!isAuthorizedToReview && (
+        <div
+          style={{
+            padding: '16px 20px',
+            background: 'rgba(2, 132, 199, 0.08)',
+            border: '1px solid rgba(2, 132, 199, 0.25)',
+            borderRadius: 'var(--radius-lg)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px',
+            color: '#0369a1',
+            fontSize: '0.9rem',
+          }}
+        >
+          <ShieldCheck size={20} style={{ flexShrink: 0 }} />
+          <div>
+            <strong>Role-Based Access Notice:</strong> You are currently signed in as{' '}
+            <strong>{user?.first_name} {user?.last_name} ({user?.roles?.join(', ')})</strong>.
+            Reviewing pending triage specimens and executing cryptographic sign-offs requires{' '}
+            <strong>ADMIN</strong>, <strong>MICROBIOLOGIST</strong>, or <strong>REVIEWER</strong> permissions.
+            Log in as <code>admin@microlims.lab</code> or <code>reviewer@microlims.lab</code> to perform QA approvals.
+          </div>
+        </div>
+      )}
 
       {/* Pending Reviews Section */}
       <div className="glass-panel-3d" style={{ padding: '24px' }}>

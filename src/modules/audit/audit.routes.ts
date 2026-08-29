@@ -10,17 +10,17 @@ const controller = new AuditController();
 
 router.use(authenticate);
 
-// Audit logs are accessible to ADMIN, REVIEWER, and VIEWER roles
+// Audit logs are accessible to all authenticated laboratory staff (21 CFR Part 11 transparency)
 router.get(
   '/',
-  requireRole('ADMIN', 'REVIEWER', 'VIEWER'),
+  requireRole('ADMIN', 'REVIEWER', 'VIEWER', 'TECHNICIAN', 'MICROBIOLOGIST'),
   validate({ query: AuditLogQuerySchema }),
   controller.list
 );
 
 router.get(
   '/:id',
-  requireRole('ADMIN', 'REVIEWER', 'VIEWER'),
+  requireRole('ADMIN', 'REVIEWER', 'VIEWER', 'TECHNICIAN', 'MICROBIOLOGIST'),
   controller.getById
 );
 

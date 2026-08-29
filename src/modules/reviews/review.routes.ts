@@ -14,8 +14,8 @@ const controller = new ReviewController();
 
 router.use(authenticate);
 
-// Get pending reviews queue (Microbiologists, Reviewers, Admins)
-router.get('/pending', requireRole('ADMIN', 'MICROBIOLOGIST', 'REVIEWER'), controller.getPending);
+// Get pending reviews queue (All lab personnel can inspect queue; only Reviewers/Admins can sign off)
+router.get('/pending', requireRole('ADMIN', 'MICROBIOLOGIST', 'REVIEWER', 'TECHNICIAN'), controller.getPending);
 
 // List reviews
 router.get('/', validate({ query: ReviewQuerySchema }), controller.list);

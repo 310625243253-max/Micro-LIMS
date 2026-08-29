@@ -54,6 +54,35 @@ export function createApp(): Express {
   });
   app.use(generalLimiter);
 
+  // Root API Information Endpoint
+  app.get('/', (req, res) => {
+    res.status(200).json({
+      name: 'Micro-LIMS API Server',
+      description: 'Microbiology Laboratory Digital Information Management System REST API',
+      version: '1.0.0',
+      status: 'online',
+      environment: config.nodeEnv,
+      endpoints: {
+        health: '/api/health',
+        auth: '/api/v1/auth/login',
+        dashboard: '/api/v1/dashboard/metrics',
+        samples: '/api/v1/samples',
+        cultures: '/api/v1/cultures',
+        media: '/api/v1/media',
+        incubations: '/api/v1/incubations',
+        observations: '/api/v1/observations',
+        tests: '/api/v1/tests',
+        ast: '/api/v1/ast',
+        contamination: '/api/v1/contamination',
+        reviews: '/api/v1/reviews',
+        reports: '/api/v1/reports',
+        audit: '/api/v1/audit',
+      },
+      frontendUrl: 'http://localhost:3000',
+      timestamp: new Date().toISOString(),
+    });
+  });
+
   // Health Check Endpoint
   app.get('/api/health', (req, res) => {
     res.status(200).json({

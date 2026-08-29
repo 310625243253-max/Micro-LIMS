@@ -62,18 +62,18 @@ docker-compose up --build
 
 ### Option 2: Local Development
 
-#### 1. Backend
+#### 1. Backend REST API
 
 ```bash
-# Navigate to backend directory
-cd backend
+# Navigate to Micro-LIMS directory
+cd Micro-LIMS
 
 # Install dependencies
 npm install
 
 # Run database migrations and seed realistic demo dataset
-npm run migrate
-npm run seed
+npm run db:migrate
+npm run db:seed
 
 # Start development server (Port 5000)
 npm run dev
@@ -82,11 +82,11 @@ npm run dev
 npm test
 ```
 
-#### 2. Frontend
+#### 2. Frontend Web UI
 
 ```bash
 # Navigate to frontend directory
-cd frontend
+cd Micro-LIMS/frontend
 
 # Install dependencies
 npm install
@@ -114,7 +114,7 @@ All demo accounts share the password: `Password123!`
 ## 📂 Repository Structure
 
 ```text
-backend/
+Micro-LIMS/
 ├── src/
 │   ├── app.ts                         # Express application wiring & middleware
 │   ├── server.ts                      # Server lifecycle & incubation scheduler

@@ -19,7 +19,19 @@ export async function runMigrations(): Promise<void> {
     );
   `);
 
-  const migrationsDir = path.resolve(__dirname, 'migrations');
+  let migrationsDir = path.resolve(__dirname, 'migrations');
+  if (!fs.existsSync(migrationsDir)) {
+    const srcPath = path.resolve(process.cwd(), 'src', 'db', 'migrations');
+    if (fs.existsSync(srcPath)) {
+      migrationsDir = srcPath;
+    } else {
+      const relPath = path.resolve(__dirname, '..', '..', 'src', 'db', 'migrations');
+      if (fs.existsSync(relPath)) {
+        migrationsDir = relPath;
+      }
+    }
+  }
+
   if (!fs.existsSync(migrationsDir)) {
     console.warn(`[MIGRATIONS] Directory not found: ${migrationsDir}`);
     return;

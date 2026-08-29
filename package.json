@@ -1,8 +1,8 @@
 {
-  "name": "microlims-backend",
+  "name": "micro-lims",
   "version": "1.0.0",
   "type": "module",
-  "description": "MicroLIMS - Microbiology Laboratory Digital Management System Backend",
+  "description": "MicroLIMS - Microbiology Laboratory Digital Management System",
   "main": "dist/server.js",
   "scripts": {
     "build": "tsc",
@@ -10,8 +10,11 @@
     "dev": "tsx watch src/server.ts",
     "dev:frontend": "cd frontend && npm run dev",
     "db:migrate": "tsx src/db/migrate.ts",
+    "migrate": "npm run db:migrate",
     "db:seed": "tsx src/db/seeds/seed.ts",
-    "test": "vitest run"
+    "seed": "npm run db:seed",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",
